@@ -1,0 +1,12 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+
+# Rebuildable vector index copy - regenerate from data/clauses.jsonl (already included)
+# rather than committing ~38MB of binary index data
+data/chroma_db/
+
+# run.sh background-launcher state and logs
+run.pid
+logs/
