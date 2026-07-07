@@ -70,8 +70,16 @@ the job runs under the scheduler, independent of any session): edit the
 `#SBATCH` resource lines to match your cluster's partition/GRES names, then:
 ```bash
 mkdir -p logs
-sbatch submit.sbatch      # prints a job id
-squeue -u $USER           # check status later, no active session needed
+sbatch submit.sbatch              # prints a job id, e.g. "Submitted batch job 12345"
+```
+Managing the job once it's submitted:
+```bash
+squeue -u $USER                   # check status later, no active session needed
+squeue -j 12345                   # status of just this job (PD=pending, R=running, CG=completing)
+scontrol show job 12345           # full job detail: assigned node, time limit, reason if pending
+tail -f logs/slurm_12345.log      # follow output live (stdout+stderr, per --output above)
+scancel 12345                     # cancel the job (queued or running)
+sacct -j 12345 --format=JobID,JobName,State,Elapsed,MaxRSS,ExitCode  # post-run summary, incl. exit code
 ```
 One MIG slice only — a CUDA process can use a single MIG instance at a time (an NVIDIA
 restriction, not a choice), and one 71GB-class slice comfortably fits either model size.
