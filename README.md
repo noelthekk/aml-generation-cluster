@@ -12,8 +12,8 @@ included (gitignored — a rebuildable binary index, regenerated locally in setu
 
 | Run | `--model-size` | Precision | Partition | Purpose |
 |---|---|---|---|---|
-| Primary comparison | `8b` (default) | BF16 | 18GB+ | Generator held fixed at Llama-3.1-8B across all four retrieval configs — the actual four-config comparison notebook 07 evaluates. Fixed regardless of hardware; see `plan.md` Sec 5, "Generator model identity." |
-| Generator-scale ablation | `70b` | NF4 4-bit | 72GB | Same 200 (config, query) pairs re-generated with Llama-3.1-70B, to check whether the retrieval-config ranking holds with a stronger generator. Added 2026-07-07; see `plan.md` Sec 5, "Generator-scale ablation" and `plan/report.md`. |
+| Primary comparison | `8b` (default) | BF16 | 18GB+ | Generator held fixed at Llama-3.1-8B across all four retrieval configs — the actual four-config comparison notebook 07 evaluates. Fixed regardless of hardware, so retrieval-quality differences aren't confounded with generator-quality differences. |
+| Generator-scale ablation | `70b` | NF4 4-bit | 72GB | Same 200 (config, query) pairs re-generated with Llama-3.1-70B, to check whether the retrieval-config ranking holds with a stronger generator. Added 2026-07-07. |
 
 Both runs share every other variable — same retrievers, same `TOP_K`/`RRF_K`/`GRAPH_HOPS`,
 same prompt, same greedy decoding — only generator size/precision changes. Precision

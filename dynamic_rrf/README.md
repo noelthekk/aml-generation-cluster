@@ -13,8 +13,8 @@ too.
 
 ## Status: local validation says don't run this on the cluster as-is
 
-Before spending cluster time, the recommended cheap gate (`plan/vector_ranking.md` Sec 5
-- IR metrics only, free, local, no LLM generation) was run against all 50 real test
+Before spending cluster time, the recommended cheap gate (IR metrics only, free, local,
+no LLM generation) was run against all 50 real test
 queries, comparing `hybrid_dynamic_rrf_retrieve()` against the existing
 `hybrid_retrieve()`:
 
@@ -52,20 +52,18 @@ regardless of the query. This folder's `retriever.py` adds
 - **Specific** queries (naming an explicit regulation/section/paragraph/recommendation
   number - detected via `query_specificity()`, a source-agnostic regex covering all
   five corpus documents' identifier styles) weight toward sparse/BM25 (0.3 dense / 0.7
-  sparse), since BM25 already wins on exact identifier matching (see the project's own
-  baseline ablation, `plan/STATUS.md`).
+  sparse), since BM25 already wins on exact identifier matching per this project's own
+  baseline ablation.
 - **General** queries weight toward dense (0.7 dense / 0.3 sparse).
-- Graph's contribution stays fixed at weight 1.0, not varied dynamically - the existing
-  RAGAS review already found hybrid retrieval genuinely improves cross-reference
-  recall/precision without needing a weighting change; what this experiment tested is
-  whether reweighting dense/sparse specifically improves things further (per the Status
-  section above: it doesn't, on this corpus).
+- Graph's contribution stays fixed at weight 1.0, not varied dynamically - hybrid
+  retrieval already improves cross-reference recall/precision without needing a
+  weighting change; what this experiment tested is whether reweighting dense/sparse
+  specifically improves things further (per the Status section above: it doesn't, on
+  this corpus).
 
 Weighting split (0.7/0.3) and the RRF-with-weights mechanism both follow Mala, Gezici &
 Giannotti (2025), "Hybrid Retrieval for Hallucination Mitigation in Large Language
-Models." Full design, the open questions this was meant to answer, and how it compares
-to this project's plain RRF and to two other papers' hybrid-ranking approaches: see
-`plan/vector_ranking.md` Sec 5.
+Models."
 
 The specificity heuristic was verified live against the real 50-query test set before
 use here: flags 24/25 `exact_anchor` and 25/25 `cross_reference` rows as "specific" -

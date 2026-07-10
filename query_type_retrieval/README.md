@@ -11,8 +11,8 @@ parent folder brings this along too.
 
 ## Status: local validation says don't run this on the cluster - negative result
 
-Before spending cluster time, the recommended cheap gate (`plan/vector_ranking.md` Sec 6
-- IR metrics only, free, local, no LLM generation) was run against the 25
+Before spending cluster time, the recommended cheap gate (IR metrics only, free, local,
+no LLM generation) was run against the 25
 `cross_reference` test queries (the only rows where the two retrievers differ -
 `exact_anchor` uses identical fixed parameters in both, confirmed by a 0/25-mismatch
 control check). `test_ir_gate.py` isolates which parameter actually causes the effect:
@@ -72,9 +72,7 @@ recommended as the next default step.
 This uses the test set's ground-truth `query_type` label directly (an oracle test, not a
 predicted value) - a legitimate first check of whether the idea has merit at all before
 building any classifier or heuristic to predict query type on unlabeled queries at
-inference time. Full design, the three-outcome interpretation this was meant to
-distinguish between, and how it compares to `dynamic_rrf/`'s experiment and three
-literature papers' hybrid-ranking approaches: see `plan/vector_ranking.md` Sec 6.
+inference time.
 
 ## Setup
 
