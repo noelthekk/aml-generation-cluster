@@ -90,8 +90,16 @@ version, check `nvidia-smi` and install the matching `torch` build from
 ## Run
 
 Only one MIG slice needed (a CUDA process uses a single MIG instance at a time - an
-NVIDIA restriction, not a choice); the same partition/GRES as the parent
-`generation_cluster/` works.
+NVIDIA restriction, not a choice). An 18GB slice is enough - Llama-3.1-8B in BF16 is
+~16GB of weights, matching the parent `generation_cluster/README.md`'s own documented
+"18GB+" requirement for the primary 8B comparison; `submit.sbatch` requests
+`h200_1g.18gb`. For an interactive session instead of `sbatch`:
+```bash
+srun --partition=Teaching --nodelist=saxa --gres=gpu:h200_1g.18gb:1 --pty bash
+```
+(confirm the exact MIG slice name for your cluster with `sinfo`/`scontrol show
+partition Teaching` if `h200_1g.18gb` isn't recognized - it follows the same
+NVIDIA MIG naming convention as the `h200_3g.71gb` slice the sibling experiments use).
 
 **Foreground, directly:**
 ```bash
